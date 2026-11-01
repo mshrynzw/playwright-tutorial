@@ -1,5 +1,10 @@
 import { test, expect } from '@playwright/test';
 
+// Inspector は Cursor の中には出ない。別の Chrome ウィンドウで、タイトルは Playwright Inspector。
+// `npx playwright test tests/todo-assertions.spec.ts --debug` の実行中だけ開く。
+// Cursor の裏に出るので、Alt+Tab で選ぶ。テスト対象のページは Google Chrome for Testing の方。
+// テストが終わると、Inspector とページの両方は閉じる。
+
 test('追加したTodoの文言とURLを確認する', async ({ page }) => {
   // ページの読み込みが終わるまで待ってから次へ進む。
   await page.goto('https://demo.playwright.dev/todomvc');
