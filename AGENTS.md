@@ -31,4 +31,4 @@ npx playwright test --headed --debug
 
 ## いまの到達点
 
-`tests/open-page.spec.ts` が `https://playwright.dev/` を開き、タイトルに Playwright が含まれることを確認する。設定は `playwright.config.ts` で、対象ブラウザは Chromium のみ。
+`tests/play-youtube.spec.ts` が指定した YouTube 動画を再生し、`video` 要素の `paused` が `false` になることを確認する。設定は `playwright.config.ts` で、対象ブラウザは Chromium と Firefox。詳細は `README.md` の「学習の記録」にある。
