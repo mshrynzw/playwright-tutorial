@@ -6,9 +6,9 @@ import { test, expect } from '@playwright/test';
 // テストが終わると、Inspector とページの両方は閉じる。
 
 test('追加したTodoの文言とURLを確認する', async ({ page }) => {
-  // ページの読み込みが終わるまで待ってから次へ進む。
-  await page.goto('https://demo.playwright.dev/todomvc');
-
+  // / から始まるので、baseURL の https://demo.playwright.dev が前に付く。
+  // 読み込みが終わるまで待ってから次へ進む。
+  await page.goto('/todomvc');
   // placeholder 属性で入力欄を探す。この行ではまだ探さない。
   const newTodo = page.getByPlaceholder('What needs to be done?');
   // 欄が見えて入力できるまで待ってから、中身をこの文字列に置き換える。
@@ -16,7 +16,7 @@ test('追加したTodoの文言とURLを確認する', async ({ page }) => {
   // Enter で一覧へ追加される。追加後、このデモは入力欄を空にする。
   await newTodo.press('Enter');
 
-  // アドレスに todomvc が含まれるまで、既定で5秒以内なら繰り返し確認する。
+  // アドレスに todomvc が含まれるまで、設定の expect.timeout である5秒以内なら繰り返し確認する。
   await expect(page).toHaveURL(/todomvc/);
   // data-testid="todo-title" の要素が画面に見えていることを確認する。
   await expect(page.getByTestId('todo-title')).toBeVisible();
