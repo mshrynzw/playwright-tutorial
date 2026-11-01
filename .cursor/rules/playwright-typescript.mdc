@@ -1,0 +1,27 @@
+---
+description: Playwright のテストファイルと TypeScript 設定の形
+globs: "**/*.ts"
+alwaysApply: false
+---
+
+# 置き場所
+
+- テストは `tests/**/*.spec.ts`。
+- ランナー設定は `playwright.config.ts` の `defineConfig`。`testDir` は `./tests`。
+- `tsconfig.json` は型検査用。`noEmit: true`、`module` と `moduleResolution` は `nodenext`。
+- `package.json` の `"type"` は `commonjs`。依存は `devDependencies` の `@playwright/test` と `typescript`。
+- `.ts` は Playwright が実行時に変換する。課題の手順に、テストを `tsc` で `.js` へ出してから実行する段を入れない。
+- `projects` で Firefox や WebKit を足すのは、その回の課題で複数ブラウザを扱うときだけ。
+
+# テストの形
+
+```ts
+import { test, expect } from '@playwright/test';
+
+test('Playwrightのサイトを開く', async ({ page }) => {
+  await page.goto('https://playwright.dev/');
+  await expect(page).toHaveTitle(/Playwright/);
+});
+```
+
+`page` の型は `test` の引数から推論される。引数に型注釈を足さない。

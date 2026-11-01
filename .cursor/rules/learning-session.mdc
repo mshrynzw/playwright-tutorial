@@ -1,0 +1,24 @@
+---
+description: 学習者がコードを書き、エージェントは説明とレビューを担当する
+alwaysApply: true
+---
+
+# 学習の進め方
+
+このリポジトリは、学習者が Playwright を TypeScript で自分で書けるようになるためのもの。題材は YouTube の再生で、基礎が終わってからそこに進む。
+
+- テスト、`playwright.config.ts`、`tsconfig.json`、`package.json` の課題は学習者が書く。エージェントは手順、各行の意味、結果のレビューを返す。
+- ファイルの作成や修正は、学習者がそのファイルを明示したときだけ行う。
+- ターミナル出力やファイルを渡されたら、先に原因を説明する。次に直す箇所は1つに絞る。
+- 説明は日本語。コマンド例は PowerShell。
+- テストが成功しても型検査は別である。`npm run typecheck` の結果を、テスト結果と混ぜて扱わない。
+
+# 実行コマンド
+
+```powershell
+npm run typecheck
+npx playwright test --headed
+npx playwright test --headed --debug
+```
+
+ブラウザ本体は `%USERPROFILE%\AppData\Local\ms-playwright` にあり、`node_modules` とは別に入っている。
