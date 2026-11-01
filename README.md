@@ -43,4 +43,54 @@ npx playwright test --headed --debug
 
 ## いま動くテスト
 
-`tests/open-page.spec.ts` は `https://playwright.dev/` を開き、ページタイトルに Playwright が含まれることを確認します。
+`tests/open-page.spec.ts` は `https://playwright.dev/` を開き、ページタイトルに Playwright が含まれることを確認します。このテストは Phase 2 で追加しました。
+
+## 学習の記録
+
+### Phase 1（第1回）プロジェクトを作る
+
+空のフォルダを npm プロジェクトにし、Playwright とブラウザを入れた。
+
+```powershell
+npm init -y
+npm install -D @playwright/test
+npx playwright install
+```
+
+- `npm init -y` は `package.json` を作る。`-y` は名前やバージョンを初期値で埋める。
+- `npm install -D @playwright/test` はテストランナーを `devDependencies` に入れる。このとき本体の `playwright` と `playwright-core` も一緒に入る。
+- `npx playwright install` は Chromium、Firefox、WebKit を `%USERPROFILE%\AppData\Local\ms-playwright` へダウンロードする。npm パッケージとは別物。
+
+結果は終了コード 0。この環境では Chromium（リビジョン 1248）が既にあったので、その実行で新規に落ちてきたのは Firefox 157.0 と WebKit 27.2 だけだった。
+
+この時点の `scripts.test` は `npm init` の仮文言のままで、Playwright はまだ起動しない。
+
+### Phase 2（第2回）TypeScript で最初のテスト
+
+テストを TypeScript で書き、ウィンドウを出して1件成功させた。
+
+```powershell
+npm install -D typescript
+```
+
+追加・更新したファイルは次のとおり。
+
+- `tsconfig.json`。型検査用。`module` と `moduleResolution` は `nodenext`、`noEmit` は `true`。
+- `playwright.config.ts`。`testDir` は `./tests`。ブラウザの指定はなく、既定の Chromium だけが対象。
+- `tests/open-page.spec.ts`。`https://playwright.dev/` を開き、タイトルに Playwright が含まれることを確認する。
+- `package.json` の `scripts`。`test` は `playwright test`、`typecheck` は `tsc --noEmit`。
+
+途中で出たエラーは2件とも、テストの失敗ではなかった。
+
+- `npm run typecheck` が `Missing script: "typecheck"` になった。`scripts` を書き換える前に実行していた。
+- `npx playwright test --headed` が `tsconfig.json` の `invalid end of input at 1:1` で止まった。ファイルは作ってあったが、中身が空のまま保存されていた。Playwright はエディタ上の未保存の文字ではなく、保存済みのファイルを読む。
+
+保存し直したあとの実行結果は次のとおり。
+
+```text
+Running 1 test using 1 worker
+  ✓  1 tests\open-page.spec.ts:3:5 › Playwrightのサイトを開く (409ms)
+  1 passed (910ms)
+```
+
+`409ms` はテスト本体、`910ms` はブラウザの起動と終了を含めた全体の時間。`--headed` でも、テストが終わるとウィンドウは閉じる。

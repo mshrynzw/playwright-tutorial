@@ -10,6 +10,10 @@ Windows 上で Playwright を TypeScript で学ぶリポジトリ。題材は Yo
 
 常時の約束は `.cursor/rules/learning-session.mdc`、テストの形は `.cursor/rules/playwright-typescript.mdc` に書く。こちらのファイルと食い違ったときは、`.cursor/rules/` を優先する。
 
+## 学習の記録
+
+各回で何を実行し、何が起きたかは `README.md` の「学習の記録」に書く。いまの到達点は下の節を見る。
+
 ## 環境
 
 - OS は Windows。コマンドは PowerShell。
