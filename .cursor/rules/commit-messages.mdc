@@ -1,0 +1,36 @@
+---
+description: コミットメッセージの型と、コミットに含めないファイル
+alwaysApply: true
+---
+
+# コミットメッセージ
+
+1行目は `種類: なぜそうしたか`。日本語で書き、末尾に句点は付けない。ファイル名の一覧は書かない。
+
+- `feat`: 新しいテストや、Phase の到達
+- `fix`: 失敗していた動作や、誤って入ったものの修正
+- `docs`: README、AGENTS.md、ルールの文章だけ
+- `chore`: 依存、gitignore、追跡対象の整理
+
+理由が1行に収まらないときだけ、空行のあとに本文を足す。
+
+```
+chore: 記録済みの node_modules を追跡対象から外す
+```
+
+種類だけの行や、何をしたかの断片は使わない。
+
+```
+fix
+update files
+```
+
+コミットは、学習者が頼んだときだけ作る。
+
+# 含めないもの
+
+`node_modules/`、`test-results/`、`playwright-report/`、`.env` はコミットしない。`.gitignore` にあっても、過去のコミットに入っているファイルは追跡が続く。外すときは次を実行してからコミットする。作業フォルダの実体は残る。
+
+```powershell
+git rm -r --cached node_modules
+```
